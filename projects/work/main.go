@@ -1,16 +1,21 @@
-package main
 
-import (
-	"fmt"
-	"time"
-	// "sync"
-)
+func removeDuplicates(inputStream <-chan string, outputStream chan<- string) {
+	defer close(outputStream)
 
-func work() {
-	time.Sleep(time.Millisecond * 50)
-	fmt.Println("done")
+	prevValue := <-inputStream
+	outputStream <- prevValue
+
+	for value := range inputStream {
+		if prevValue == value {
+			continue
+		}
+
+		outputStream <- value
+		prevValue = value
+	}
 }
 
-func main() {
-	// необходимо в отдельных горутинах вызвать функцию work() 10 раз и дождаться результатов выполнения вызванных функций
-}
+
+
+
+

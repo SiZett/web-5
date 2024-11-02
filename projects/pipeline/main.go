@@ -1,7 +1,21 @@
-package main
+wg := new(sync.WaitGroup)
 
-// реализовать removeDuplicates(in, out chan string)
-
-func main() {
-	// здесь должен быть код для проверки правильности работы функции removeDuplicates(in, out chan string)
+for i := 0; i < 10; i++ {
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		work()
+	}()
 }
+
+wg.Wait()
+
+
+
+
+
+
+
+
+
+
